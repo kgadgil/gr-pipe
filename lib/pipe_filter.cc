@@ -39,7 +39,7 @@
 
 #include <iostream>
 #include <pipe_filter.h>
-#include <gr_io_signature.h>
+#include <gnuradio/io_signature.h>
 
 /*
  * Create a new instance of pipe_filter and return
@@ -60,7 +60,7 @@ pipe_make_filter (size_t in_item_sz,
 /*
  * Specify constraints on number of input and output streams.
  * This info is used to construct the input and output signatures
- * (2nd & 3rd args to gr_block's constructor).  The input and
+ * (2nd & 3rd args to gr::block's constructor).  The input and
  * output signatures are used by the runtime system to
  * check that a valid number and type of inputs and outputs
  * are connected to this block.
@@ -78,9 +78,9 @@ pipe_filter::pipe_filter (size_t in_item_sz,
                           size_t out_item_sz,
                           double relative_rate,
                           const char *cmd)
-  : gr_block ("pipe_filter",
-	      gr_make_io_signature (MIN_IN,  MAX_IN,  in_item_sz),
-	      gr_make_io_signature (MIN_OUT, MAX_OUT, out_item_sz)),
+  : gr::block ("pipe_filter",
+        gr::io_signature::make (MIN_IN,  MAX_IN,  in_item_sz),
+        gr::io_signature::make (MIN_OUT, MAX_OUT, out_item_sz)),
     d_in_item_sz (in_item_sz),
     d_out_item_sz (out_item_sz),
     d_relative_rate (relative_rate)

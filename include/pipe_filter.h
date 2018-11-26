@@ -24,7 +24,7 @@
 
 #include <stdio.h>
 #include <pipe_api.h>
-#include <gr_block.h>
+#include <gnuradio/block.h>
 
 class pipe_filter;
 
@@ -57,9 +57,9 @@ PIPE_API pipe_filter_sptr pipe_make_filter (size_t in_item_sz,
  * Create a filter block with any program connected through pipe.
  * \ingroup block
  *
- * This uses the preferred technique: subclassing gr_block.
+ * This uses the preferred technique: subclassing gr::block.
  */
-class PIPE_API pipe_filter : public gr_block
+class PIPE_API pipe_filter : public gr::block
 {
 private:
   // The friend declaration allows pipe_make_filter to

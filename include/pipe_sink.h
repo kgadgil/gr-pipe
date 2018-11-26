@@ -24,7 +24,7 @@
 
 #include <stdio.h>
 #include <pipe_api.h>
-#include <gr_sync_block.h>
+#include <gnuradio/sync_block.h>
 
 class pipe_sink;
 
@@ -55,9 +55,9 @@ PIPE_API pipe_sink_sptr pipe_make_sink (size_t in_item_sz,
  * Create a sink block with any program connected through pipe.
  * \ingroup block
  *
- * This uses the preferred technique: subclassing gr_block.
+ * This uses the preferred technique: subclassing gr::block.
  */
-class PIPE_API pipe_sink : public gr_sync_block
+class PIPE_API pipe_sink : public gr::sync_block
 {
 private:
   // The friend declaration allows pipe_make_sink to

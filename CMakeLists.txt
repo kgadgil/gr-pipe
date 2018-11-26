@@ -21,7 +21,7 @@
 ########################################################################
 # Project setup
 ########################################################################
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
 project(gr-pipe CXX C)
 enable_testing()
 
@@ -32,6 +32,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif(NOT CMAKE_BUILD_TYPE)
 set(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE} CACHE STRING "")
 
+# Make sure our local CMake Modules path comes first
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
 ########################################################################
@@ -67,31 +68,26 @@ endif()
 # Install directories
 ########################################################################
 include(GrPlatform) #define LIB_SUFFIX
-set(GR_RUNTIME_DIR      bin)
-set(GR_LIBRARY_DIR      lib${LIB_SUFFIX})
-set(GR_INCLUDE_DIR      include)
-set(GR_DATA_DIR         share)
-set(GR_PKG_DATA_DIR     ${GR_DATA_DIR}/${CMAKE_PROJECT_NAME})
-set(GR_DOC_DIR          ${GR_DATA_DIR}/doc)
-set(GR_PKG_DOC_DIR      ${GR_DOC_DIR}/${CMAKE_PROJECT_NAME})
-set(GR_CONF_DIR         etc)
-set(GR_PKG_CONF_DIR     ${GR_CONF_DIR}/${CMAKE_PROJECT_NAME}/conf.d)
-set(GR_LIBEXEC_DIR      libexec)
-set(GR_PKG_LIBEXEC_DIR  ${GR_LIBEXEC_DIR}/${CMAKE_PROJECT_NAME})
-set(GRC_BLOCKS_DIR      ${GR_PKG_DATA_DIR}/grc/blocks)
+SET(GR_RUNTIME_DIR     bin CACHE PATH "Path to install all binaries")
+SET(GR_LIBRARY_DIR     lib${LIB_SUFFIX} CACHE PATH "Path to install libraries")
+SET(GR_INCLUDE_DIR     include CACHE PATH "Path to install header files")
+SET(GR_DATA_DIR        share CACHE PATH "Base location for data")
+SET(GR_PKG_DATA_DIR    ${GR_DATA_DIR}/${CMAKE_PROJECT_NAME} CACHE PATH "Path to install package data")
+SET(GR_DOC_DIR         ${GR_DATA_DIR}/doc CACHE PATH "Path to install documentation")
+SET(GR_PKG_DOC_DIR     ${GR_DOC_DIR}/${CMAKE_PROJECT_NAME}-${DOCVER} CACHE PATH "Path to install package docs")
+SET(GR_LIBEXEC_DIR     libexec CACHE PATH "Path to install libexec files")
+SET(GR_PKG_LIBEXEC_DIR ${GR_LIBEXEC_DIR}/${CMAKE_PROJECT_NAME} CACHE PATH "Path to install package libexec files")
+SET(GRC_BLOCKS_DIR     ${GR_PKG_DATA_DIR}/grc/blocks CACHE PATH "Path to install GRC blocks")
+SET(GR_THEMES_DIR      ${GR_PKG_DATA_DIR}/themes CACHE PATH "Path to install QTGUI themes")
 
 ########################################################################
 # Find gnuradio build dependencies
 ########################################################################
-find_package(Gruel)
-find_package(GnuradioCore)
+find_package(Gnuradio)
 
-if(NOT GRUEL_FOUND)
-    message(FATAL_ERROR "Gruel required to compile gr-pipe")
-endif()
 
-if(NOT GNURADIO_CORE_FOUND)
-    message(FATAL_ERROR "GnuRadio Core required to compile gr-pipe")
+if(NOT GNURADIO_RUNTIME_FOUND)
+    message(FATAL_ERROR "GnuRadio runtime required to compile gr-pipe")
 endif()
 
 ########################################################################
@@ -100,14 +96,12 @@ endif()
 include_directories(
     ${CMAKE_SOURCE_DIR}/include
     ${Boost_INCLUDE_DIRS}
-    ${GRUEL_INCLUDE_DIRS}
-    ${GNURADIO_CORE_INCLUDE_DIRS}
+    ${GNURADIO_RUNTIME_INCLUDE_DIRS}
 )
 
 link_directories(
     ${Boost_LIBRARY_DIRS}
-    ${GRUEL_LIBRARY_DIRS}
-    ${GNURADIO_CORE_LIBRARY_DIRS}
+    ${GNURADIO_RUNTIME_LIBRARY_DIRS}
 )
 
 # Set component parameters

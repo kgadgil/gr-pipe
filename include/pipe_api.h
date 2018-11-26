@@ -22,7 +22,7 @@
 #ifndef INCLUDED_PIPE_API_H
 #define INCLUDED_PIPE_API_H
 
-#include <gruel/attributes.h>
+#include <gnuradio/attributes.h>
 
 #ifdef gnuradio_pipe_EXPORTS
 #  define PIPE_API __GR_ATTR_EXPORT

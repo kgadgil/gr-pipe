@@ -4,6 +4,11 @@
 
 %include "gnuradio.i"			// the common stuff
 
+%{
+#include "gnuradio_swig_bug_workaround.h"	// mandatory bug fix
+#include <stdexcept>
+%}
+
 //load generated python docstrings
 %include "pipe_swig_doc.i"
 

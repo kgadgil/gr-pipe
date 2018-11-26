@@ -26,7 +26,7 @@ add_library(gnuradio-pipe SHARED
   pipe_filter.cc
   pipe_source.cc
   pipe_sink.cc)
-target_link_libraries(gnuradio-pipe ${Boost_LIBRARIES} ${GRUEL_LIBRARIES} ${GNURADIO_CORE_LIBRARIES})
+target_link_libraries(gnuradio-pipe ${Boost_LIBRARIES} ${GNURADIO_RUNTIME_LIBRARIES})
 set_target_properties(gnuradio-pipe PROPERTIES DEFINE_SYMBOL "gnuradio_pipe_EXPORTS")
 
 ########################################################################
