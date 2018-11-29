@@ -158,7 +158,7 @@ macro(GR_SWIG_MAKE name)
 
     #setup the actual swig library target to be built
     include(UseSWIG)
-    SWIG_ADD_MODULE(${name} python ${ifiles})
+    SWIG_ADD_LIBRARY(${name} TYPE SHARED LANGUAGE python SOURCES ${ifiles})
     if(APPLE)
       set(PYTHON_LINK_OPTIONS "-undefined dynamic_lookup")
     else()
