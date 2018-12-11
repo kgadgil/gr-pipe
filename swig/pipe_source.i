@@ -1,3 +1,3 @@
 
-GR_SWIG_BLOCK_MAGIC(pipe,source);
+GR_SWIG_BLOCK_MAGIC2(pipe,source);
 %include "pipe_source.h"
