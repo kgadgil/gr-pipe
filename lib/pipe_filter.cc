@@ -41,8 +41,8 @@
 #include <pipe_filter.h>
 #include <gnuradio/io_signature.h>
 
-namespace gr{
-  namespace pipe {
+/*namespace gr{
+  namespace pipe {*/
 
 /*
  * Create a new instance of pipe_filter and return
@@ -309,5 +309,5 @@ pipe_filter::general_work (int noutput_items,
 
   return (n_produced);
 }
-}
-}
+/*}
+}*/

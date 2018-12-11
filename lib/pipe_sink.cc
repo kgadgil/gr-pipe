@@ -41,8 +41,8 @@
 #include <pipe_sink.h>
 #include <gnuradio/io_signature.h>
 
-namespace gr{
-  namespace pipe {
+/*namespace gr{
+  namespace pipe {*/
 /*
  * Create a new instance of pipe_sink and return
  * a boost shared_ptr.  This is effectively the public constructor.
@@ -232,5 +232,5 @@ pipe_sink::work (int noutput_items,
 
   return (n_consumed);
 }
-}
-}
+/*}
+}*/

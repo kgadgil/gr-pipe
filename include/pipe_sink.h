@@ -26,8 +26,8 @@
 #include <pipe_api.h>
 #include <gnuradio/sync_block.h>
 
-namespace gr{
-  namespace pipe{
+/*namespace gr{
+  namespace pipe{*/
     class pipe_sink;
 
 /*
@@ -96,6 +96,6 @@ namespace gr{
     gr_vector_const_void_star &input_items,
     gr_vector_void_star &output_items);
 };
-}
-}
+/*}
+}*/
 #endif /* INCLUDED_PIPE_SINK_H */

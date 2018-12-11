@@ -26,8 +26,8 @@
 #include <pipe_api.h>
 #include <gnuradio/block.h>
 
-namespace gr{
-  namespace pipe {
+/*namespace gr{
+  namespace pipe {*/
     class pipe_filter;
 
 /*
@@ -110,7 +110,7 @@ namespace gr{
     gr_vector_const_void_star &input_items,
     gr_vector_void_star &output_items);
 };
-}
-}
+/*}
+}*/
 
 #endif /* INCLUDED_PIPE_FILTER_H */
