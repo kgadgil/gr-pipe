@@ -41,21 +41,23 @@
 #include <pipe_filter.h>
 #include <gnuradio/io_signature.h>
 
+namespace gr{
+  namespace pipe {
+
 /*
  * Create a new instance of pipe_filter and return
  * a boost shared_ptr.  This is effectively the public constructor.
  */
-pipe_filter_sptr 
-pipe_make_filter (size_t in_item_sz,
-                  size_t out_item_sz,
-                  double relative_rate,
-                  const char *cmd)
-{
-  return gnuradio::get_initial_sptr(new pipe_filter (in_item_sz,
-                                                     out_item_sz,
-                                                     relative_rate,
-                                                     cmd));
-}
+    pipe_filter_sptr pipe_make_filter (size_t in_item_sz,
+      size_t out_item_sz,
+      double relative_rate,
+      const char *cmd)
+    {
+      return gnuradio::get_initial_sptr(new pipe_filter (in_item_sz,
+       out_item_sz,
+       relative_rate,
+       cmd));
+    }
 
 /*
  * Specify constraints on number of input and output streams.
@@ -75,15 +77,15 @@ static const int MAX_OUT = 1;	// maximum number of output streams
  */
 
 pipe_filter::pipe_filter (size_t in_item_sz,
-                          size_t out_item_sz,
-                          double relative_rate,
-                          const char *cmd)
-  : gr::block ("pipe_filter",
-        gr::io_signature::make (MIN_IN,  MAX_IN,  in_item_sz),
-        gr::io_signature::make (MIN_OUT, MAX_OUT, out_item_sz)),
-    d_in_item_sz (in_item_sz),
-    d_out_item_sz (out_item_sz),
-    d_relative_rate (relative_rate)
+  size_t out_item_sz,
+  double relative_rate,
+  const char *cmd)
+: gr::block ("pipe_filter",
+  gr::io_signature::make (MIN_IN,  MAX_IN,  in_item_sz),
+  gr::io_signature::make (MIN_OUT, MAX_OUT, out_item_sz)),
+d_in_item_sz (in_item_sz),
+d_out_item_sz (out_item_sz),
+d_relative_rate (relative_rate)
 {
   set_relative_rate(d_relative_rate);
 
@@ -252,14 +254,14 @@ pipe_filter::read_process_output(uint8_t *out, int nitems)
 
   ret = fread(out, d_out_item_sz, nitems, d_cmd_stdout);
   if (    ret == 0
-       && ferror(d_cmd_stdout)
-       && errno != EAGAIN
-       && errno != EWOULDBLOCK) {
+   && ferror(d_cmd_stdout)
+   && errno != EAGAIN
+   && errno != EWOULDBLOCK) {
     throw std::runtime_error("fread() error");
-    return (-1);
-  }
+  return (-1);
+}
 
-  return (ret);
+return (ret);
 }
 
 int
@@ -269,25 +271,25 @@ pipe_filter::write_process_input(const uint8_t *in, int nitems)
 
   ret = fwrite(in, d_in_item_sz, nitems, d_cmd_stdin);
   if (    ret == 0
-       && ferror(d_cmd_stdin)
-       && errno != EAGAIN
-       && errno != EWOULDBLOCK) {
+   && ferror(d_cmd_stdin)
+   && errno != EAGAIN
+   && errno != EWOULDBLOCK) {
     throw std::runtime_error("fwrite() error");
-    return (-1);
-  }
+  return (-1);
+}
 
-  if (d_unbuffered)
-    fflush(d_cmd_stdin);
+if (d_unbuffered)
+  fflush(d_cmd_stdin);
 
-  return (ret);
+return (ret);
 }
 
 
 int 
 pipe_filter::general_work (int noutput_items,
-                           gr_vector_int &ninput_items,
-                           gr_vector_const_void_star &input_items,
-                           gr_vector_void_star &output_items)
+ gr_vector_int &ninput_items,
+ gr_vector_const_void_star &input_items,
+ gr_vector_void_star &output_items)
 {
   const uint8_t *in = (const uint8_t *) input_items[0];
   int n_in_items = ninput_items[0];
@@ -306,4 +308,6 @@ pipe_filter::general_work (int noutput_items,
   consume_each(n_consumed);
 
   return (n_produced);
+}
+}
 }
