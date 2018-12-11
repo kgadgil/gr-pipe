@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-#
+
+
 # Copyright 2004,2007 Free Software Foundation, Inc.
 #
 # This file is part of GNU Radio
@@ -18,9 +19,9 @@
 # along with GNU Radio; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
-#
 
 from gnuradio import gr, gr_unittest
+from gnuradio import blocks
 import os, time
 import pipe_swig
 
