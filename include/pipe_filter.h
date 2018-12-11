@@ -26,7 +26,9 @@
 #include <pipe_api.h>
 #include <gnuradio/block.h>
 
-class pipe_filter;
+namespace gr{
+  namespace pipe {
+    class pipe_filter;
 
 /*
  * We use boost::shared_ptr's instead of raw pointers for all access
@@ -39,7 +41,7 @@ class pipe_filter;
  *
  * As a convention, the _sptr suffix indicates a boost::shared_ptr
  */
-typedef boost::shared_ptr<pipe_filter> pipe_filter_sptr;
+    typedef boost::shared_ptr<pipe_filter> pipe_filter_sptr;
 
 /*!
  * \brief Return a shared_ptr to a new instance of pipe_filter.
@@ -48,10 +50,10 @@ typedef boost::shared_ptr<pipe_filter> pipe_filter_sptr;
  * constructor is private.  chaos_make_dcsk_mod_cbc is the public
  * interface for creating new instances.
  */
-PIPE_API pipe_filter_sptr pipe_make_filter (size_t in_item_sz,
-                                            size_t out_item_sz,
-                                            double relative_rate,
-                                            const char *cmd);
+    PIPE_API pipe_filter_sptr pipe_make_filter (size_t in_item_sz,
+      size_t out_item_sz,
+      double relative_rate,
+      const char *cmd);
 
 /*!
  * Create a filter block with any program connected through pipe.
@@ -59,42 +61,42 @@ PIPE_API pipe_filter_sptr pipe_make_filter (size_t in_item_sz,
  *
  * This uses the preferred technique: subclassing gr::block.
  */
-class PIPE_API pipe_filter : public gr::block
-{
-private:
+    class PIPE_API pipe_filter : public gr::block
+    {
+    private:
   // The friend declaration allows pipe_make_filter to
   // access the private constructor.
 
-  friend PIPE_API pipe_filter_sptr pipe_make_filter (size_t in_item_sz,
-                                                     size_t out_item_sz,
-                                                     double relative_rate,
-                                                     const char *cmd);
+      friend PIPE_API pipe_filter_sptr pipe_make_filter (size_t in_item_sz,
+       size_t out_item_sz,
+       double relative_rate,
+       const char *cmd);
 
-  size_t d_in_item_sz;
-  size_t d_out_item_sz;
-  double d_relative_rate;
-  bool   d_unbuffered;
+      size_t d_in_item_sz;
+      size_t d_out_item_sz;
+      double d_relative_rate;
+      bool   d_unbuffered;
 
   // Runtime data
-  int d_cmd_stdin_pipe[2];
-  int d_cmd_stdout_pipe[2];
-  FILE *d_cmd_stdin;
-  FILE *d_cmd_stdout;
-  pid_t d_cmd_pid;
+      int d_cmd_stdin_pipe[2];
+      int d_cmd_stdout_pipe[2];
+      FILE *d_cmd_stdin;
+      FILE *d_cmd_stdout;
+      pid_t d_cmd_pid;
 
-  pipe_filter (size_t in_item_sz,
-               size_t out_item_sz,
-               double relative_rate,
+      pipe_filter (size_t in_item_sz,
+       size_t out_item_sz,
+       double relative_rate,
                const char *cmd);  	// private constructor
 
-  void create_command_process(const char *cmd);
-  void create_pipe(int pipe[2]);
-  void set_fd_flags(int fd, long flags);
-  void reset_fd_flags(int fd, long flags);
-  int read_process_output(uint8_t *out, int nitems);
-  int write_process_input(const uint8_t *in, int nitems);
+      void create_command_process(const char *cmd);
+      void create_pipe(int pipe[2]);
+      void set_fd_flags(int fd, long flags);
+      void reset_fd_flags(int fd, long flags);
+      int read_process_output(uint8_t *out, int nitems);
+      int write_process_input(const uint8_t *in, int nitems);
 
-public:
+    public:
   ~pipe_filter ();	// public destructor
 
   void forecast (int noutput_items, gr_vector_int &ninput_items_required);
@@ -104,9 +106,11 @@ public:
   // Where all the action really happens
 
   int general_work (int noutput_items,
-		    gr_vector_int &ninput_items,
-		    gr_vector_const_void_star &input_items,
-		    gr_vector_void_star &output_items);
+    gr_vector_int &ninput_items,
+    gr_vector_const_void_star &input_items,
+    gr_vector_void_star &output_items);
 };
+}
+}
 
 #endif /* INCLUDED_PIPE_FILTER_H */
